@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+<style>
+#Tela {
+position:absolute;
+top:10px;
+right:10%;
+}
+</style>
+		<script type="text/javascript">
+var p;
+var myinter;
+function stopInter(){
+	window.clearTimeout(myinter);	
+}
+function draw(nome,email,mensagem,posx,posy,posfx, posfy){
+  	var canvas = document.getElementById('Slide');
+
+	if (canvas.getContext) {
+		var ctx = canvas.getContext("2d");
+		ctx.clearRect(0, 0, 300, 200);
+		ctx.font = "30px Comic Sans MS";
+		ctx.fillStyle = "red";
+		ctx.textAlign = "center";
+		if(!posx){
+			posx=canvas.width/2;
+		}
+		if(!posy) posy=canvas.height/2;
+		if(!posfx) posfx=canvas.width/2;
+		if(!posfy) posfy=canvas.height/2;
+
+		ctx.fillText(nome, posx, posy); 
+		ctx.fillText(email, posx, posy+35); 
+		ctx.fillText(mensagem, posx, posy+70);
+
+		if(posx<posfx){
+			p=posx+1;		
+			myinter=window.setTimeout(function(){draw(nome,email,mensagem,p,null,null,null);},5);
+
+		}else if(posx>=posfx){
+			stopInter();
+	
+		}
+      }
+
+}
+
+function trocar(){
+	var n = document.getElementById('nome').value;
+	var e = document.getElementById('email').value;
+	var m = document.getElementById('msg').value;
+	draw(n,e,m,1,null,null,null);
+}
+		</script>
+	</head>
+	<body onload="trocar()">
+		<div id="Pagina">
+			<div id="Formulario">
+				<form onsubmit="return false">
+    					<div>
+        					<label for="nome">Nome:</label>
+        					<input type="text" id="nome" value="Seunome"/>
+    					</div>
+    					<div>
+        					<label for="email">E-mail:</label>
+        					<input type="email" id="email" value="teste@teste.com"/>
+    					</div>
+    					<div>
+       						<label for="msg">Mensagem:</label>
+        					<textarea id="msg">Quero ser DEV!</textarea>
+    					</div>
+    					<div class="button">
+        					<button type="button" onclick="javascript:trocar();">Trocar</button>
+    					</div>
+				</form>
+			</div>
+			<div id="Tela">
+				<canvas id="Slide" width="300" height="200" style="border:1px solid #000000;"></canvas>
+			</div>	
+		</div>
+
+	</body>
+</html>
